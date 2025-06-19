@@ -1,13 +1,16 @@
 import express from "express"
 const app = express()
 import mongoose from "mongoose"
+import {UserRouter} from "./routes/user"
+import "dotenv/config"
 
-
+app.use(express.json())
+app.use(UserRouter)
 
 
 async function main(){
     try{
-        await mongoose.connect(process.env.MONGODB_URI)
+        await mongoose.connect(process.env.MONGODB_URI!)
         app.listen(3000)
     }catch{
         console.error("error while connecting to db");
@@ -15,4 +18,4 @@ async function main(){
     }
 }
 
-main
+main()

@@ -1,4 +1,5 @@
 import {Schema,model} from "mongoose"
+import { string } from "zod";
 
 
 
@@ -9,7 +10,11 @@ const userSchema = new Schema({
     lastName : String,
 })
 
+const contentSchema = new Schema ({
+    title : {type :String , required : true} ,
+    content : {type :String , required : true},
+    link : {type :String , required : true}
+})
 
-const UserModel = model("user",userSchema)
-
-export default UserModel;
+export const contentModel = model("content",contentSchema)
+export const UserModel = model("user",userSchema)
