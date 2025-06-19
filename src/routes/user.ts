@@ -7,6 +7,7 @@ import { RequestHandler } from "express";
 import jwt from "jsonwebtoken"
 import 'dotenv/config'
 const UserRouter : Router = express.Router()
+// import { userMiddleWare } from "../middleware/userMiddleware"
 
 UserRouter.post("/api/v1/signup", async function (req: Request, res: Response) {
   const requiredBody = z.object({
@@ -85,17 +86,14 @@ try{
 }
 }
 
-
 UserRouter.post(("/api/v1/signin"), SignInHandler);
 
-UserRouter.get("/api/v1/content", async function (req, res) {
+UserRouter.get("/api/v1/content", async function (req, res) {});
 
-});
 UserRouter.delete("/api/v1/content", async function (req, res) {});
+
 UserRouter.post("/api/v1/brain/share", async function (req, res) {});
 
-UserRouter.get("/api/v1/brain/:shareLink", async function (req, res) {
-
-});
+UserRouter.get("/api/v1/brain/:shareLink", async function (req, res) {});
 
 export { UserRouter }
