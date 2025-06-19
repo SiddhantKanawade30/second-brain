@@ -1,7 +1,7 @@
 import express from "express"
 const app = express()
 import mongoose from "mongoose"
-import {UserRouter} from "./routes/user" 
+
 
 
 

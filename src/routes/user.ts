@@ -2,11 +2,10 @@ import express from "express";
 const app = express();
 import z from "zod";
 import bcrypt from "bcrypt";
-import Router from "express"
 import UserModel from "../db";
 import jwt from "jsonwebtoken"
 import 'dotenv/config'
-const UserRouter = Router()
+const UserRouter = express.Router()
 let throwErr = false;
 
 UserRouter.post("/api/v1/signup", async function (req, res) {
@@ -54,21 +53,46 @@ UserRouter.post("/api/v1/signup", async function (req, res) {
 UserRouter.post("/api/v1/signin", async function (req, res) {
   const email = req.body.email;
   const password = req.body.password;
-  const response = await UserModel.findOne({
+  try{
+    const response = await UserModel.findOne({
     email: email,
   });
+
   if (!response) {
     res.json({
       message: "User does not exist in our database",
     });
   }
+
   const matchedPass = await bcrypt.compare(password, response.password);
 
-  if(matchedPass){
-    const token = jwt.sign({
-        id : response._id.toString()
-    }, process.env.JWT_USER_SECRET)
+  if(!matchedPass){
+    res.json({
+        message : "invalid password"
+    })
   }
+
+  const secret = process.env.JWT_USER_SECRET;
+
+  if(!secret){
+    res.json({
+        message : "environment variable not defined"
+    })
+  }
+
+    const token = jwt.sign(
+        {id : response?._id.toString()},
+        secret
+    )
+  
+  }catch{
+        return res.status(500).json({ message: "Something went wrong" });
+  }
+ 
+  
+  
+
+  
 });
 UserRouter.get("/api/v1/content", async function (req, res) {});
 UserRouter.delete("/api/v1/content", async function (req, res) {});
