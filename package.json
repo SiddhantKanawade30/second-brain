@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc -b",
-    "dev": "npm run build && run start"
+    "dev": "npm run build && npm start"
   },
   "repository": {
     "type": "git",
@@ -20,9 +20,14 @@
   "homepage": "https://github.com/SiddhantKanawade30/second-brain#readme",
   "description": "",
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.96",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.0",
     "typescript": "^5.8.3"
