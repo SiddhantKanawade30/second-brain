@@ -10,7 +10,7 @@ const decodedToken = await jwt.verify(token as string, process.env.JWT_USER_SECR
 
 if(decodedToken){
     //@ts-ignore
-    req.userId = decodedToken.id
+    req.userId = (decodedToken as any)?.id
     next()
 }else{
     res.status(404).json({

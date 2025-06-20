@@ -10,7 +10,7 @@ const userSchema = new Schema({
 const contentSchema = new Schema({
     title : {type: String, unique: true} ,
     link : {type: String, unique: true},
-    tags : {type : mongoose.Types.ObjectId , ref:"tag"},
+    tags : {type : mongoose.Types.ObjectId , ref:"Tag"},
     userId : {type : mongoose.Types.ObjectId,ref: "User",required : true}
 })
 

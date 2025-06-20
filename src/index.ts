@@ -74,15 +74,16 @@ app.post("/api/v1/content", userMiddleWare ,async function(req:Request,res:Respo
     const {title,link} = req.body
 
     try{
-        await contentModel.create({
+       const result =  await contentModel.create({
             link,
             title, 
             //@ts-ignore
             userId : req.userId,
-            tags : []
+            
         })
-        res.status(200).json({message : "content created"})
-    }catch{
+        res.status(200).json({message : "content created", content : result})
+    }catch(err){
+            console.error("error is:", err)
             res.status(400).json({message : "content not created"})
     }
 })
