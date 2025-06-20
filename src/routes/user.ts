@@ -2,12 +2,13 @@ import express from "express";
 import { Request , Response , Router } from "express";
 import z from "zod";
 import bcrypt from "bcrypt";
-import {UserModel} from "../db";
+import {UserModel, contentModel} from "../db";
 import { RequestHandler } from "express";
 import jwt from "jsonwebtoken"
 import 'dotenv/config'
 const UserRouter : Router = express.Router()
-// import { userMiddleWare } from "../middleware/userMiddleware"
+import { userMiddleWare } from "../middleware/userMiddleware"
+
 
 UserRouter.post("/api/v1/signup", async function (req: Request, res: Response) {
   const requiredBody = z.object({
@@ -87,8 +88,26 @@ try{
 }
 
 UserRouter.post(("/api/v1/signin"), SignInHandler);
+//@ts-ignore
+UserRouter.post("/api/v1/content",userMiddleWare, async function (req, res) {
 
-UserRouter.get("/api/v1/content", async function (req, res) {});
+     const {link , type } = req.body
+
+      try{
+        await contentModel.create({
+          link,
+          type,
+          //@ts-ignore
+          userId : req.userId,
+          tags : []
+        })
+        res.json({
+          message : "content added"
+        })
+      }catch{
+          res.json({message : "problem during adding content"})
+      }
+})
 
 UserRouter.delete("/api/v1/content", async function (req, res) {});
 

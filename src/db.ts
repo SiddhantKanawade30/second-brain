@@ -1,5 +1,6 @@
 import {Schema,model} from "mongoose"
 import { string } from "zod";
+import mongoose from "mongoose"
 
 
 
@@ -12,8 +13,9 @@ const userSchema = new Schema({
 
 const contentSchema = new Schema ({
     title : {type :String , required : true} ,
-    content : {type :String , required : true},
-    link : {type :String , required : true}
+    link : {type :String , required : true},
+    tags : [{type: mongoose.Types.ObjectId, ref:'Tag'}],
+    userId : {type : mongoose.Types.ObjectId , ref: "user" , required : true }
 })
 
 export const contentModel = model("content",contentSchema)
