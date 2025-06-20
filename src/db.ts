@@ -14,7 +14,7 @@ const userSchema = new Schema({
 const contentSchema = new Schema ({
     title : {type :String , required : true} ,
     link : {type :String , required : true},
-    tags : [{type: mongoose.Types.ObjectId, ref:'Tag'}],
+    tags : [{type: mongoose.Types.ObjectId, ref:'tag'}],
     userId : {type : mongoose.Types.ObjectId , ref: "user" , required : true }
 })
 

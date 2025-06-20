@@ -73,7 +73,7 @@ try{
      return
   }
 
-  const token = jwt.sign({ id : user._id }, process.env.JWT_USER_SECRET!)
+  const token = jwt.sign({ id : user._id , email : email }, process.env.JWT_USER_SECRET!)
 
  res.status(200).json({
     token,
@@ -94,13 +94,19 @@ UserRouter.post("/api/v1/content",userMiddleWare, async function (req, res) {
      const {link , type } = req.body
 
       try{
-        await contentModel.create({
+
+        //@ts-ignore
+        console.log("userId from middleware:", req.userId); // Debug
+        console.log("link:", link, "type:", type);          // Debug   
+
+        const content = await contentModel.create({
           link,
           type,
           //@ts-ignore
           userId : req.userId,
           tags : []
         })
+         console.log("Content created:", content);
         res.json({
           message : "content added"
         })
