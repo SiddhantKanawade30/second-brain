@@ -88,7 +88,9 @@ app.post("/api/v1/content", userMiddleWare ,async function(req:Request,res:Respo
     }
 })
 
-
+// app.delete("/api/v1/content", userMiddleWare , async function(req:Request,res:Response){
+//     const contentId = req.body.contentId
+// })
 
 
 app.listen(3000)
