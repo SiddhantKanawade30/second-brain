@@ -1,0 +1,30 @@
+{
+  "name": "secondbrain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc -b",
+    "dev": "npm run build && run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiddhantKanawade30/second-brain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SiddhantKanawade30/second-brain/issues"
+  },
+  "homepage": "https://github.com/SiddhantKanawade30/second-brain#readme",
+  "description": "",
+  "dependencies": {
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mongoose": "^5.11.96",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.0",
+    "typescript": "^5.8.3"
+  }
+}
