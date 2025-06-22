@@ -3,10 +3,11 @@ const app = express()
 import jwt from "jsonwebtoken"
 import { Request,Response } from "express"
 import bcrypt from "bcrypt"
-import { userModel , contentModel } from "./db"
+import { userModel , contentModel , linkModel } from "./db"
 import "dotenv/config"
 import mongoose from "mongoose"
 import { userMiddleWare } from "./middleware"
+import { random } from "./utils"
 
 
 mongoose.connect(process.env.MONGO_URL!)
@@ -88,9 +89,69 @@ app.post("/api/v1/content", userMiddleWare ,async function(req:Request,res:Respo
     }
 })
 
-// app.delete("/api/v1/content", userMiddleWare , async function(req:Request,res:Response){
-//     const contentId = req.body.contentId
-// })
+app.delete("/api/v1/content", userMiddleWare , async function(req:Request,res:Response){
+})
+
+app.get("/api/v1/content",userMiddleWare, async(req,res)=>{
+        const content = contentModel.find({
+            //@ts-ignore
+            userId : req.userId
+        })
+
+
+        res.json({
+            content
+        })
+})
+
+app.post("/api/v1/brain/share",userMiddleWare,(req,res)=>{
+    const { share } = req.body
+
+    if(share){
+        linkModel.create({
+            //@ts-ignore
+            userId : req.userId,
+            hash : random(10)
+        })
+    }else{
+        linkModel.deleteOne ({
+            //@ts-ignore
+            userId: req.userId
+        })
+    }
+
+    res.json({
+        message : "updated Share link"
+    })
+})
+
+app.get("/api/v1/brain/:shareLink",async(req,res)=>{
+    const hash = req.params.shareLink
+
+    const link = await linkModel.findOne({
+        hash
+    })
+
+    if(!link){
+        res.status(411).json({message : "sorry incorrect input"})
+        return 
+    }
+
+
+    const content = await contentModel.find({
+        userId : link.userId
+    })
+
+    const user = await userModel.findOne({
+        userId : link.userId
+    })
+
+    res.json({
+        username : user?.firstName,
+        content : content
+    })
+})
+
 
 
 app.listen(3000)
