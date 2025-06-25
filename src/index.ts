@@ -8,11 +8,13 @@ import "dotenv/config"
 import mongoose from "mongoose"
 import { userMiddleWare } from "./middleware"
 import { random } from "./utils"
+import cors from "cors" 
 
 
 mongoose.connect(process.env.MONGO_URL!)
 
 app.use(express.json())
+app.use(cors())
 
 app.post("/api/v1/signup", async function(req:Request,res:Response){
     const {firstName , email , password} = req.body
