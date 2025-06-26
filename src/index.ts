@@ -74,12 +74,13 @@ const signInHandler = async function(req:Request,res:Response){
 app.post("/api/v1/signin",signInHandler)
 
 app.post("/api/v1/content", userMiddleWare ,async function(req:Request,res:Response){
-    const {title,link} = req.body
+    const {title,link,type} = req.body
 
     try{
        const result =  await contentModel.create({
             link,
             title, 
+            type,
             //@ts-ignore
             userId : req.userId,
             
