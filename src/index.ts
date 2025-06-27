@@ -93,6 +93,16 @@ app.post("/api/v1/content", userMiddleWare ,async function(req:Request,res:Respo
 })
 
 app.delete("/api/v1/content", userMiddleWare , async function(req:Request,res:Response){
+
+     await contentModel.deleteOne({
+        //@ts-ignore
+        userId : req.userId,
+        _id : req.body.id
+    })
+    res.json({
+        messsage : "item deleted"
+    })
+
 })
 
 app.get("/api/v1/content",userMiddleWare, async(req,res)=>{
